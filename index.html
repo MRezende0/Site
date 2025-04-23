@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2P - Infraestrutura de pagamento para o seu negócio</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="/">
+                    <h1>2P</h1>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#beneficios">Benefícios</a></li>
+                    <li><a href="#solucoes">Soluções</a></li>
+                    <li><a href="#documentacao">Documentação</a></li>
+                </ul>
+            </nav>
+            <div class="cta-button">
+                <a href="#" class="btn btn-primary">Acessar Plataforma</a>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Infraestrutura de pagamento para o seu negócio</h2>
+                <p>Potencialize transferências globais instantâneas com tecnologia digital. Rápido, transparente e seguro.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary">Começar Agora</a>
+                    <a href="#" class="btn btn-outline">Solicitar Demo</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="dashboard-preview">
+                    <div class="dashboard-header">
+                        <div class="dashboard-logo">2P</div>
+                        <div class="dashboard-nav">
+                            <span>Home</span>
+                            <span>Transações</span>
+                            <span>Clientes</span>
+                        </div>
+                    </div>
+                    <div class="dashboard-content">
+                        <div class="transaction">
+                            <div class="time">10:15</div>
+                            <div class="amount">R$ 5.000,00</div>
+                            <div class="status success">Sucesso</div>
+                        </div>
+                        <div class="transaction">
+                            <div class="time">09:42</div>
+                            <div class="amount">€ 1.200,00</div>
+                            <div class="status processing">Processando</div>
+                        </div>
+                        <div class="transaction">
+                            <div class="time">09:15</div>
+                            <div class="amount">$ 3.500,00</div>
+                            <div class="status success">Sucesso</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Example Section -->
+    <section class="code-example">
+        <div class="container">
+            <div class="code-block">
+                <pre><code>
+import { TwoP } from '2p';
+const twop = new TwoP('&lt;api_key&gt;');
+
+(async function() {
+    // Criar transação
+    await twop.transactions.create('&lt;instance_id&gt;', {
+        amount: 1000.00,
+        currency: "BRL",
+        description: "Pagamento mensal",
+        customer_id: "cus_123456",
+        payment_method: "pix",
+    });
+})</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="beneficios" class="benefits">
+        <div class="container">
+            <h2 class="section-title">Benefícios</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Integração Digital Simplificada</h3>
+                    <p>Integre facilmente soluções digitais ao seu fluxo de pagamento existente com nossas APIs amigáveis para desenvolvedores.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Transações Instantâneas</h3>
+                    <p>Conecte qualquer carteira, obtenha cotações em tempo real e desfrute de taxas baixas para uma experiência de usuário perfeita.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Conformidade Garantida</h3>
+                    <p>Nós cuidamos de todas as questões regulatórias, de conformidade e técnicas. Concentre-se no seu negócio principal.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Powering Companies Section -->
+    <section class="powering">
+        <div class="container">
+            <h2 class="section-title">Impulsionando Empresas Inovadoras</h2>
+            <p class="section-subtitle">Habilitando pagamentos internacionais seguros em menos de 60 segundos, reduzindo os tempos de transação tradicionais em 80%.</p>
+            <div class="time-saving-graphic">
+                <div class="traditional">
+                    <span class="label">Método Tradicional</span>
+                    <div class="bar"></div>
+                    <span class="time">5 minutos</span>
+                </div>
+                <div class="with-2p">
+                    <span class="label">Com 2P</span>
+                    <div class="bar"></div>
+                    <span class="time">60 segundos</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section id="solucoes" class="solutions">
+        <div class="container">
+            <h2 class="section-title">Soluções</h2>
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Folha de Pagamento Global</h3>
+                    <p>Pague seus contratados em qualquer moeda, não importa onde estejam.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Pagamentos Empresariais</h3>
+                    <p>Gerencie pagamentos globais em massa com facilidade.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h3>Liquidação para Comerciantes</h3>
+                    <p>Agilize pagamentos com consolidação automática de moedas.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <h3>Faturamento Empresarial</h3>
+                    <p>Simplifique seu processo de faturamento com transações digitais.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h3>Remessas</h3>
+                    <p>Ofereça soluções de remessa rápidas e acessíveis para seus clientes.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Segurança Integrada</h3>
+                    <p>Proteção completa para todas as suas transações financeiras.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Section -->
+    <section class="technical">
+        <div class="container">
+            <h2 class="section-title">Segurança por design, em todas as plataformas</h2>
+            <p class="section-subtitle">Adicione gateways de pagamento aos seus aplicativos com código mínimo. Nossas SDKs suportam múltiplas linguagens e frameworks, apoiadas por uma API REST amigável para desenvolvedores com documentação OpenAPI pública.</p>
+            <div class="tech-tabs">
+                <div class="tab-header">
+                    <button class="tab-btn active" data-tab="kyc">KYC/KYB</button>
+                    <button class="tab-btn" data-tab="bank">Contas Bancárias</button>
+                    <button class="tab-btn" data-tab="payments">Pagamentos</button>
+                    <button class="tab-btn" data-tab="wallets">Carteiras</button>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="kyc">
+                        <pre><code>
+import { TwoP } from '2p';
+const twop = new TwoP('&lt;api_key&gt;');
+
+(async function() {
+    // KYC Padrão
+    await twop.customers.create('&lt;instance_id&gt;', {
+        type: "individual",
+        kyc_type: "standard",
+        email: "email@exemplo.com",
+        tax_id: "12345678901",
+        first_name: "João",
+        last_name: "Silva",
+        date_of_birth: "1990-01-01T00:00:00Z"
+    });
+})</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2 class="section-title">Uma API. Múltiplas opções de pagamento.</h2>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary">Solicitar Demo</a>
+                <a href="#" class="btn btn-outline">Ver Documentação</a>
+            </div>
+            <div class="global-map">
+                <img src="images/global-map.svg" alt="Mapa global mostrando alcance internacional">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <h2>2P</h2>
+                </div>
+                <div class="footer-social">
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h3>Empresa</h3>
+                    <ul>
+                        <li><a href="#">Suporte</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">Termos de Serviço</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Desenvolvedores</h3>
+                    <ul>
+                        <li><a href="#" id="documentacao">Documentação da API</a></li>
+                        <li><a href="#">Referência da API</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Status</h3>
+                    <div class="system-status">
+                        <span class="status-indicator online"></span>
+                        <span>Todos os sistemas operacionais</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>2P, Inc. é uma empresa de tecnologia financeira. Ao criar e usar sua conta na 2P, você concorda com os Termos de Serviço da 2P, com todas as leis e regulamentos aplicáveis.</p>
+                <p>&copy; 2025 2P, Inc. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
