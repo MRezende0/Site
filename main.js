@@ -237,89 +237,121 @@ const twop = new TwoP('&lt;api_key&gt;');
  * Configura animações ao scroll com efeitos avançados
  */
 function setupScrollAnimations() {
-    // Elementos que serão animados com diferentes efeitos
-    const fadeUpElements = document.querySelectorAll('.benefit-card, .solution-card, .section-title');
-    const fadeInElements = document.querySelectorAll('.hero-content, .section-subtitle');
-    const scaleElements = document.querySelectorAll('.dashboard-preview, .code-block');
-    const staggeredElements = document.querySelectorAll('.benefits-grid > *, .solutions-grid > *');
+    // Seleciona elementos para animação ou adiciona classes de animação
+    const setupAnimationClasses = () => {
+        // Elementos que receberão animações
+        const sections = [
+            { selector: '.benefit-card', animation: 'fade-in-up', stagger: true },
+            { selector: '.solution-card', animation: 'fade-in-up', stagger: true },
+            { selector: '.platform-card', animation: 'fade-in-up', stagger: true },
+            { selector: '.hero-content', animation: 'fade-in-left' },
+            { selector: '.hero-image', animation: 'fade-in-right' },
+            { selector: '.code-block', animation: 'fade-in' },
+            { selector: '.section-title', animation: 'fade-in' },
+            { selector: '.footer-column', animation: 'fade-in-up', stagger: true },
+            { selector: '.powering-stats', animation: 'fade-in-up' }
+        ];
+        
+        // Adiciona classes de animação aos elementos
+        sections.forEach(section => {
+            const elements = document.querySelectorAll(section.selector);
+            elements.forEach((element, index) => {
+                element.classList.add(section.animation);
+                
+                // Se for para escalonar as animações (stagger)
+                if (section.stagger) {
+                    element.setAttribute('data-delay', 100 * index);
+                }
+                
+                // Adiciona atributo para threshold personalizado se necessário
+                if (section.threshold) {
+                    element.setAttribute('data-threshold', section.threshold);
+                }
+            });
+        });
+    };
     
-    // Função para verificar se um elemento está visível na viewport
+    // Configura as animações
+    setupAnimationClasses();
+    
+    // Seleciona todos os elementos com classes de animação
+    const animatedElements = document.querySelectorAll('.fade-in, .fade-in-up, .fade-in-left, .fade-in-right');
+    
+    // Função para verificar se um elemento está visível na viewport com threshold personalizado
     function isElementInViewport(el) {
         const rect = el.getBoundingClientRect();
+        const threshold = parseFloat(el.getAttribute('data-threshold')) || 0.8;
         return (
-            rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) * threshold &&
+            rect.bottom >= 0
         );
     }
     
-    // Função para animar elementos visíveis
+    // Função para animar elementos visíveis com efeito suave
     function animateVisibleElements() {
-        // Fade Up Animation
-        fadeUpElements.forEach(element => {
+        animatedElements.forEach(element => {
             if (isElementInViewport(element) && !element.classList.contains('animated')) {
-                element.classList.add('animated');
-                element.style.opacity = '1';
-                element.style.transform = 'translateY(0)';
-            }
-        });
-        
-        // Fade In Animation
-        fadeInElements.forEach(element => {
-            if (isElementInViewport(element) && !element.classList.contains('animated')) {
-                element.classList.add('animated');
-                element.style.opacity = '1';
-            }
-        });
-        
-        // Scale Animation
-        scaleElements.forEach(element => {
-            if (isElementInViewport(element) && !element.classList.contains('animated')) {
-                element.classList.add('animated');
-                element.style.opacity = '1';
-                element.style.transform = 'scale(1)';
-            }
-        });
-        
-        // Staggered Animation
-        staggeredElements.forEach((element, index) => {
-            if (isElementInViewport(element) && !element.classList.contains('animated')) {
+                // Adiciona um atraso baseado no atributo data-delay, se existir
+                const delay = parseInt(element.getAttribute('data-delay')) || 0;
+                
                 setTimeout(() => {
+                    // Adiciona a classe animated para iniciar a animação
                     element.classList.add('animated');
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
-                }, index * 100); // Atraso escalonado para cada elemento
+                    
+                    // Após a animação completa, remove as classes para melhorar performance
+                    const animationDuration = 1000; // 1 segundo de duração da animação
+                    setTimeout(() => {
+                        element.classList.remove('fade-in', 'fade-in-up', 'fade-in-left', 'fade-in-right');
+                        element.style.opacity = '1';
+                        element.style.transform = 'none';
+                    }, animationDuration + delay);
+                }, delay);
             }
         });
     }
     
-    // Configura os elementos para animação
-    fadeUpElements.forEach(element => {
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(30px)';
-        element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-    });
-    
-    fadeInElements.forEach(element => {
-        element.style.opacity = '0';
-        element.style.transition = 'opacity 1s ease';
-    });
-    
-    scaleElements.forEach(element => {
-        element.style.opacity = '0';
-        element.style.transform = 'scale(0.95)';
-        element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-    });
-    
-    staggeredElements.forEach(element => {
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(30px)';
-        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    });
-    
-    // Executa a animação no carregamento da página
-    setTimeout(animateVisibleElements, 300);
-    
-    // Executa a animação ao scroll
-    window.addEventListener('scroll', animateVisibleElements);
+    // Usa Intersection Observer para melhor performance
+    if ('IntersectionObserver' in window) {
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const delay = parseInt(element.getAttribute('data-delay')) || 0;
+                    
+                    setTimeout(() => {
+                        element.classList.add('animated');
+                        
+                        // Após a animação completa, remove as classes para melhorar performance
+                        const animationDuration = 1000;
+                        setTimeout(() => {
+                            element.classList.remove('fade-in', 'fade-in-up', 'fade-in-left', 'fade-in-right');
+                            element.style.opacity = '1';
+                            element.style.transform = 'none';
+                        }, animationDuration + delay);
+                    }, delay);
+                    
+                    // Parar de observar após animar
+                    observer.unobserve(element);
+                }
+            });
+        }, observerOptions);
+        
+        // Observa cada elemento
+        animatedElements.forEach(element => {
+            observer.observe(element);
+        });
+    } else {
+        // Fallback para navegadores que não suportam Intersection Observer
+        window.addEventListener('load', animateVisibleElements);
+        window.addEventListener('scroll', animateVisibleElements);
+        animateVisibleElements();
+    }
 }
 
 /**
@@ -336,381 +368,176 @@ function setupSmoothScroll() {
             if (targetId === '#') return;
             
             const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                // Adiciona efeito de highlight temporário na seção de destino
-                const highlightEffect = document.createElement('div');
-                highlightEffect.className = 'section-highlight';
-                highlightEffect.style.position = 'absolute';
-                highlightEffect.style.top = '0';
-                highlightEffect.style.left = '0';
-                highlightEffect.style.right = '0';
-                highlightEffect.style.bottom = '0';
-                highlightEffect.style.backgroundColor = 'rgba(30, 94, 250, 0.1)';
-                highlightEffect.style.borderRadius = '12px';
-                highlightEffect.style.zIndex = '-1';
-                highlightEffect.style.opacity = '0';
-                highlightEffect.style.transition = 'opacity 1s ease';
-                
-                // Adiciona posição relativa à seção se não tiver
-                if (window.getComputedStyle(targetElement).position === 'static') {
-                    targetElement.style.position = 'relative';
-                }
-                
-                targetElement.appendChild(highlightEffect);
-                
-                // Calcula a posição de destino considerando o header fixo
-                const headerHeight = document.querySelector('.header').offsetHeight;
-                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-                
-                // Realiza o scroll suave
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-                
-                // Mostra e esconde o efeito de highlight
+            if (!targetElement) return;
+            
+            // Calcula a posição do elemento alvo
+            const headerOffset = 80; // Altura do header fixo
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            
+            // Adiciona efeito de highlight temporário ao destino
+            const highlightElement = () => {
+                targetElement.classList.add('scroll-highlight');
                 setTimeout(() => {
-                    highlightEffect.style.opacity = '1';
-                    
-                    setTimeout(() => {
-                        highlightEffect.style.opacity = '0';
-                        
-                        // Remove o elemento após a animação
-                        setTimeout(() => {
-                            targetElement.removeChild(highlightEffect);
-                        }, 1000);
-                    }, 1000);
-                }, 500);
-            }
+                    targetElement.classList.remove('scroll-highlight');
+                }, 1500);
+            };
+            
+            // Animação suave com efeito de easing
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+            
+            // Adiciona o highlight após a animação de scroll
+            setTimeout(highlightElement, 600);
         });
     });
 }
 
 /**
- * Adiciona funcionalidade de contador para números na seção de estatísticas
+ * Adiciona funcionalidade de contador para números na seção de estatísticas com formatação
  */
 function setupCounters() {
-    // Adiciona contadores à seção de estatísticas se não existirem
-    const poweringSection = document.querySelector('.powering');
-    if (poweringSection && !document.querySelector('.stats-container')) {
-        const statsContainer = document.createElement('div');
-        statsContainer.className = 'stats-container';
-        statsContainer.innerHTML = `
-            <div class="stat-item">
-                <div class="stat-value"><span class="counter" data-target="80">0</span>%</div>
-                <div class="stat-label">Redução de custo</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value"><span class="counter" data-target="24">0</span>/7</div>
-                <div class="stat-label">Disponibilidade</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value"><span class="counter" data-target="60">0</span>s</div>
-                <div class="stat-label">Tempo de transação</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value"><span class="counter" data-target="150">0</span>+</div>
-                <div class="stat-label">Países atendidos</div>
-            </div>
-        `;
-        
-        // Adiciona estilos inline para os contadores
-        const style = document.createElement('style');
-        style.textContent = `
-            .stats-container {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-around;
-                margin: 3rem 0;
-                gap: 2rem;
-            }
-            .stat-item {
-                text-align: center;
-                flex: 1 1 200px;
-                max-width: 250px;
-            }
-            .stat-value {
-                font-size: 3rem;
-                font-weight: 700;
-                color: var(--blue-primary);
-                margin-bottom: 0.5rem;
-                font-family: 'Montserrat', sans-serif;
-            }
-            .stat-label {
-                font-size: 1.2rem;
-                color: var(--gray-dark);
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Insere os contadores antes do gráfico de economia de tempo
-        const timeSavingGraphic = poweringSection.querySelector('.time-saving-graphic');
-        if (timeSavingGraphic) {
-            timeSavingGraphic.parentNode.insertBefore(statsContainer, timeSavingGraphic);
-        } else {
-            poweringSection.querySelector('.container').appendChild(statsContainer);
-        }
-    }
-    
     const counters = document.querySelectorAll('.counter');
+    
+    if (counters.length === 0) return;
+    
+    // Função para formatar números (adiciona separadores de milhar)
+    const formatNumber = (num) => {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    };
     
     counters.forEach(counter => {
         const target = parseInt(counter.getAttribute('data-target'));
-        const duration = 2500; // duração da animação em ms
-        const step = target / (duration / 16); // 60fps
-        
+        const prefix = counter.getAttribute('data-prefix') || '';
+        const suffix = counter.getAttribute('data-suffix') || '';
+        const duration = 2500; // Duração da animação em ms
+        const step = target / duration * 10; // Incremento a cada 10ms
         let current = 0;
+        
+        // Cria elemento para o valor
+        const valueElement = document.createElement('span');
+        valueElement.className = 'counter-value';
+        counter.innerHTML = '';
+        
+        // Adiciona prefixo se existir
+        if (prefix) {
+            const prefixElement = document.createElement('span');
+            prefixElement.className = 'counter-prefix';
+            prefixElement.textContent = prefix;
+            counter.appendChild(prefixElement);
+        }
+        
+        // Adiciona o valor
+        counter.appendChild(valueElement);
+        
+        // Adiciona sufixo se existir
+        if (suffix) {
+            const suffixElement = document.createElement('span');
+            suffixElement.className = 'counter-suffix';
+            suffixElement.textContent = suffix;
+            counter.appendChild(suffixElement);
+        }
+        
         const updateCounter = () => {
             current += step;
             if (current < target) {
-                counter.textContent = Math.floor(current);
-                requestAnimationFrame(updateCounter);
+                valueElement.textContent = formatNumber(Math.floor(current));
+                requestAnimationFrame(() => {
+                    setTimeout(updateCounter, 10);
+                });
             } else {
-                counter.textContent = target;
+                valueElement.textContent = formatNumber(target);
                 
                 // Adiciona efeito de destaque quando o contador termina
-                counter.style.textShadow = '0 0 15px rgba(30, 94, 250, 0.5)';
+                counter.classList.add('counter-complete');
                 setTimeout(() => {
-                    counter.style.textShadow = 'none';
-                }, 500);
+                    counter.classList.remove('counter-complete');
+                }, 300);
             }
         };
         
         // Inicia o contador quando o elemento estiver visível
-        const observer = new IntersectionObserver(entries => {
+        const observer = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
-                updateCounter();
+                setTimeout(() => {
+                    updateCounter();
+                }, 300); // Pequeno atraso para melhor efeito visual
                 observer.disconnect();
             }
-        }, { threshold: 0.5 });
+        }, { threshold: 0.2 });
         
         observer.observe(counter);
     });
 }
 
 /**
- * Simula dados dinâmicos para o dashboard na hero section com animações avançadas
- */
-function setupDashboardDemo() {
-    const transactions = [
-        { time: '10:15', amount: 'R$ 5.000,00', status: 'success', type: 'Pagamento', currency: 'BRL' },
-        { time: '09:42', amount: '€ 1.200,00', status: 'processing', type: 'Remessa', currency: 'EUR' },
-        { time: '09:15', amount: '$ 3.500,00', status: 'success', type: 'Exportação', currency: 'USD' },
-        { time: '08:50', amount: '£ 2.300,00', status: 'success', type: 'Importação', currency: 'GBP' },
-        { time: '08:22', amount: 'R$ 1.800,00', status: 'processing', type: 'Pagamento', currency: 'BRL' },
-        { time: '07:45', amount: '$ 4.200,00', status: 'success', type: 'Remessa', currency: 'USD' },
-        { time: '07:30', amount: '₿ 0.05', status: 'success', type: 'Cripto', currency: 'BTC' },
-        { time: '07:15', amount: 'ETH 1.2', status: 'processing', type: 'Cripto', currency: 'ETH' }
-    ];
-    
-    const dashboardContent = document.querySelector('.dashboard-content');
-    if (dashboardContent) {
-        // Atualiza o layout do dashboard para mostrar mais informações
-        dashboardContent.innerHTML = '';
-        
-        // Adiciona as primeiras transações
-        for (let i = 0; i < 3; i++) {
-            const transaction = transactions[i];
-            const transactionEl = createTransactionElement(transaction);
-            dashboardContent.appendChild(transactionEl);
-            setTimeout(() => {
-                transactionEl.style.opacity = '1';
-                transactionEl.style.transform = 'translateX(0)';
-            }, i * 200);
-        }
-        
-        let currentIndex = 3;
-        
-        // Atualiza o dashboard a cada 3 segundos com animações aprimoradas
-        setInterval(() => {
-            // Remove a última transação com animação
-            if (dashboardContent.children.length >= 3) {
-                const lastChild = dashboardContent.lastChild;
-                lastChild.style.opacity = '0';
-                lastChild.style.transform = 'translateX(20px)';
-                
-                setTimeout(() => {
-                    dashboardContent.removeChild(lastChild);
-                }, 300);
-            }
-            
-            // Adiciona uma nova transação no topo com animação
-            setTimeout(() => {
-                const newTransaction = createTransactionElement(transactions[currentIndex]);
-                dashboardContent.prepend(newTransaction);
-                
-                // Animação de entrada
-                setTimeout(() => {
-                    newTransaction.style.opacity = '1';
-                    newTransaction.style.transform = 'translateX(0)';
-                }, 50);
-                
-                // Atualiza o índice
-                currentIndex = (currentIndex + 1) % transactions.length;
-            }, 350);
-        }, 3000);
-    }
-    
-    // Função para criar elemento de transação com design aprimorado
-    function createTransactionElement(transaction) {
-        const transactionEl = document.createElement('div');
-        transactionEl.className = 'transaction';
-        transactionEl.style.opacity = '0';
-        transactionEl.style.transform = 'translateX(-20px)';
-        transactionEl.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        
-        // Adiciona ícone baseado no tipo de transação
-        let icon = '';
-        switch(transaction.type) {
-            case 'Pagamento':
-                icon = '<i class="fas fa-money-bill-wave"></i>';
-                break;
-            case 'Remessa':
-                icon = '<i class="fas fa-exchange-alt"></i>';
-                break;
-            case 'Exportação':
-                icon = '<i class="fas fa-file-export"></i>';
-                break;
-            case 'Importação':
-                icon = '<i class="fas fa-file-import"></i>';
-                break;
-            case 'Cripto':
-                icon = '<i class="fas fa-coins"></i>';
-                break;
-            default:
-                icon = '<i class="fas fa-money-check"></i>';
-        }
-        
-        // Layout aprimorado com mais informações
-        transactionEl.innerHTML = `
-            <div class="transaction-icon">${icon}</div>
-            <div class="transaction-details">
-                <div class="transaction-type">${transaction.type}</div>
-                <div class="transaction-time">${transaction.time}</div>
-            </div>
-            <div class="transaction-amount">${transaction.amount}</div>
-            <div class="status ${transaction.status}">${
-                transaction.status === 'success' ? 'Sucesso' : 'Processando'
-            }</div>
-        `;
-        
-        // Adiciona estilos inline para o novo layout
-        transactionEl.style.display = 'grid';
-        transactionEl.style.gridTemplateColumns = 'auto 1fr auto auto';
-        transactionEl.style.gap = '10px';
-        transactionEl.style.alignItems = 'center';
-        
-        // Estilo para o ícone
-        const iconEl = transactionEl.querySelector('.transaction-icon');
-        if (iconEl) {
-            iconEl.style.color = 'var(--blue-primary)';
-            iconEl.style.fontSize = '1.2rem';
-            iconEl.style.width = '30px';
-            iconEl.style.height = '30px';
-            iconEl.style.display = 'flex';
-            iconEl.style.alignItems = 'center';
-            iconEl.style.justifyContent = 'center';
-            iconEl.style.backgroundColor = 'var(--blue-light)';
-            iconEl.style.borderRadius = '50%';
-        }
-        
-        return transactionEl;
-    }
-}
-
-/**
- * Configura a animação de blockchain para o fundo
- */
-function setupBlockchainAnimation() {
-    const sections = document.querySelectorAll('.hero, .cta');
-    
-    sections.forEach(section => {
-        // Cria o container para a animação
-        const blockchainAnimation = document.createElement('div');
-        blockchainAnimation.className = 'blockchain-animation';
-        section.appendChild(blockchainAnimation);
-        
-        // Cria nós e linhas da blockchain
-        const nodeCount = 8;
-        const nodes = [];
-        
-        for (let i = 0; i < nodeCount; i++) {
-            // Cria um nó
-            const node = document.createElement('div');
-            node.className = 'blockchain-node';
-            
-            // Posiciona aleatoriamente
-            const top = Math.random() * 80 + 10; // 10-90%
-            const left = Math.random() * 80 + 10; // 10-90%
-            
-            node.style.top = `${top}%`;
-            node.style.left = `${left}%`;
-            node.style.animationDelay = `${i * 0.5}s`;
-            
-            blockchainAnimation.appendChild(node);
-            nodes.push({ element: node, top, left });
-        }
-        
-        // Cria linhas conectando os nós
-        for (let i = 0; i < nodes.length - 1; i++) {
-            const line = document.createElement('div');
-            line.className = 'blockchain-line';
-            
-            // Calcula a posição e ângulo da linha
-            const node1 = nodes[i];
-            const node2 = nodes[i + 1];
-            
-            // Calcula o comprimento e ângulo
-            const dx = (node2.left - node1.left) * section.offsetWidth / 100;
-            const dy = (node2.top - node1.top) * section.offsetHeight / 100;
-            const length = Math.sqrt(dx * dx + dy * dy);
-            const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-            
-            // Posiciona a linha
-            line.style.width = `${length}px`;
-            line.style.top = `${node1.top}%`;
-            line.style.left = `${node1.left}%`;
-            line.style.transform = `rotate(${angle}deg)`;
-            line.style.animationDelay = `${i * 0.3}s`;
-            
-            blockchainAnimation.appendChild(line);
-        }
-    });
-}
-
-/**
- * Configura efeito de digitação para blocos de código
+ * Configura efeito de digitação para blocos de código com cursor piscante
  */
 function setupTypingEffect() {
-    const codeBlocks = document.querySelectorAll('.code-block code');
+    const codeBlock = document.querySelector('.code-block code');
+    if (!codeBlock) return;
     
-    codeBlocks.forEach(codeBlock => {
-        const originalContent = codeBlock.innerHTML;
-        const contentLength = originalContent.length;
-        
-        // Limpa o conteúdo inicial
-        codeBlock.innerHTML = '';
-        
-        // Função para simular digitação
-        function typeCode(index) {
-            if (index <= contentLength) {
-                codeBlock.innerHTML = originalContent.substring(0, index);
-                setTimeout(() => typeCode(index + 3), 10); // Digita 3 caracteres por vez para ser mais rápido
+    const codeText = codeBlock.textContent;
+    codeBlock.textContent = '';
+    
+    // Adiciona cursor piscante
+    const cursor = document.createElement('span');
+    cursor.className = 'typing-cursor';
+    cursor.textContent = '|';
+    cursor.style.opacity = '1';
+    cursor.style.fontWeight = '100';
+    cursor.style.animation = 'blink 1s infinite';
+    codeBlock.appendChild(cursor);
+    
+    // Adiciona estilo para animação do cursor
+    if (!document.querySelector('#cursor-style')) {
+        const style = document.createElement('style');
+        style.id = 'cursor-style';
+        style.textContent = `
+            @keyframes blink {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0; }
             }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Função para simular digitação com velocidade variável
+    function typeCode(index) {
+        if (index < codeText.length) {
+            // Remove o cursor antes de adicionar o caractere
+            codeBlock.removeChild(cursor);
+            
+            // Adiciona o próximo caractere
+            codeBlock.textContent += codeText.charAt(index);
+            
+            // Recoloca o cursor
+            codeBlock.appendChild(cursor);
+            
+            // Velocidade variável para parecer mais natural
+            const speed = Math.random() * 10 + 10; // Entre 10ms e 20ms
+            
+            // Pausa mais longa após certos caracteres
+            const char = codeText.charAt(index);
+            const extraDelay = (char === '\n' || char === ';' || char === '{' || char === '}') ? 200 : 0;
+            
+            setTimeout(() => typeCode(index + 1), speed + extraDelay);
         }
-        
-        // Inicia o efeito de digitação quando o bloco estiver visível
-        const observer = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting) {
-                setTimeout(() => {
-                    typeCode(0);
-                }, 500);
-                observer.disconnect();
-            }
-        }, { threshold: 0.3 });
-        
-        observer.observe(codeBlock);
-    });
+    }
+    
+    // Inicia a digitação quando o bloco de código estiver visível
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            setTimeout(() => {
+                typeCode(0);
+            }, 500);
+            observer.disconnect();
+        }
+    }, { threshold: 0.3 });
+    
+    observer.observe(codeBlock);
 }
 
 /**

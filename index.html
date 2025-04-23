@@ -11,6 +11,36 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/3a414ddd0f.js" crossorigin="anonymous"></script>
     <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        /* Estilos para animações adicionais */
+        .scroll-highlight {
+            animation: highlight-pulse 1.5s ease-out;
+        }
+        
+        @keyframes highlight-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(30, 94, 250, 0.1); }
+            50% { box-shadow: 0 0 0 20px rgba(30, 94, 250, 0.2); }
+            100% { box-shadow: 0 0 0 0 rgba(30, 94, 250, 0); }
+        }
+        
+        .counter-complete {
+            animation: counter-pulse 0.3s ease-out;
+        }
+        
+        @keyframes counter-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Animações de entrada */
+        .fade-in { opacity: 0; transition: opacity 0.8s ease; }
+        .fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-in-left { opacity: 0; transform: translateX(-30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-in-right { opacity: 0; transform: translateX(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        
+        .animated { opacity: 1; transform: translateY(0) translateX(0); }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -45,17 +75,12 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <span class="badge floating">Blockchain Technology</span>
-                <h2>Infraestrutura de pagamento internacional com blockchain</h2>
-                <p>Potencialize transferências globais instantâneas com tecnologia digital. Rápido, transparente e seguro, 24/7 com custo reduzido.</p>
+                <span class="badge floating">Plataforma de Pagamento</span>
+                <h2>Pagamentos internacionais simplificados</h2>
+                <p>Realize transferências globais instantâneas com nossa plataforma de pagamento digital. Simples, rápido e seguro, disponível 24/7 com taxas significativamente mais baixas.</p>
                 <div class="hero-buttons">
                     <a href="#" class="btn btn-primary">Começar Agora <i class="fas fa-arrow-right"></i></a>
                     <a href="#" class="btn btn-outline">Solicitar Demo <i class="fas fa-headset"></i></a>
-                </div>
-                <div class="hero-features">
-                    <div class="feature"><i class="fas fa-bolt"></i> Transações em 60 segundos</div>
-                    <div class="feature"><i class="fas fa-globe"></i> Cobertura global</div>
-                    <div class="feature"><i class="fas fa-shield-alt"></i> Segurança blockchain</div>
                 </div>
             </div>
             <div class="hero-image">
@@ -71,17 +96,26 @@
                     <div class="dashboard-content">
                         <div class="transaction">
                             <div class="time">10:15</div>
-                            <div class="amount">R$ 5.000,00</div>
+                            <div class="amount">
+                                <div class="currency-flag brl-flag"></div>
+                                <span>R$ 50.000,00</span>
+                            </div>
                             <div class="status success">Sucesso</div>
                         </div>
                         <div class="transaction">
                             <div class="time">09:42</div>
-                            <div class="amount">€ 1.200,00</div>
+                            <div class="amount">
+                                <div class="currency-flag eur-flag"></div>
+                                <span>€ 19.200,00</span>
+                            </div>
                             <div class="status processing">Processando</div>
                         </div>
                         <div class="transaction">
                             <div class="time">09:15</div>
-                            <div class="amount">$ 3.500,00</div>
+                            <div class="amount">
+                                <div class="currency-flag usd-flag"></div>
+                                <span>$ 37.500,00</span>
+                            </div>
                             <div class="status success">Sucesso</div>
                         </div>
                     </div>
@@ -90,24 +124,84 @@
         </div>
     </section>
 
-    <!-- Code Example Section -->
-    <section class="code-example">
+    <!-- Benefits Section -->
+    <section class="benefits-section">
         <div class="container">
-            <div class="code-block">
-                <pre><code>
-import { TwoP } from '2p';
-const twop = new TwoP('&lt;api_key&gt;');
+            <h2 class="section-title">Benefícios</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-clock"></i></div>
+                    <h3>Disponível 24/7</h3>
+                    <p>Realize transferências a qualquer hora, em qualquer dia da semana, incluindo feriados.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-percentage"></i></div>
+                    <h3>Taxas Menores</h3>
+                    <p>Economize até 80% em taxas comparado aos métodos tradicionais de transferência internacional.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>Ultra-rápido</h3>
+                    <p>Suas transferências internacionais são concluídas em apenas 60 segundos.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-mouse-pointer"></i></div>
+                    <h3>Fácil de Usar</h3>
+                    <p>Interface intuitiva projetada para simplificar pagamentos internacionais.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Segurança Avançada</h3>
+                    <p>Proteção de ponta a ponta com criptografia avançada e monitoramento contra fraudes.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-globe"></i></div>
+                    <h3>Cobertura Global</h3>
+                    <p>Envie e receba pagamentos de mais de 150 países em diversas moedas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-(async function() {
-    // Criar transação
-    await twop.transactions.create('&lt;instance_id&gt;', {
-        amount: 1000.00,
-        currency: "BRL",
-        description: "Pagamento mensal",
-        customer_id: "cus_123456",
-        payment_method: "pix",
-    });
-})</code></pre>
+    <!-- Platform Demo Section -->
+    <section class="platform-demo">
+        <div class="container">
+            <h2 class="section-title">Plataforma Simples e Intuitiva</h2>
+            <p class="section-subtitle">Nossa interface foi projetada para facilitar suas transações internacionais, sem complicações técnicas.</p>
+            <div class="demo-showcase">
+                <div class="demo-screen">
+                    <div class="demo-header">
+                        <div class="demo-title">Nova Transferência</div>
+                    </div>
+                    <div class="demo-content">
+                        <div class="demo-form">
+                            <div class="demo-input">
+                                <label>Valor</label>
+                                <div class="input-value">R$ 5.000,00</div>
+                            </div>
+                            <div class="demo-input">
+                                <label>Moeda de destino</label>
+                                <div class="input-value currency-input">
+                                    <div class="currency-flag eur-flag"></div>
+                                    <span>EUR (Euro)</span>
+                                </div>
+                            </div>
+                            <div class="demo-input">
+                                <label>Destinatário</label>
+                                <div class="input-value">Maria Silva</div>
+                            </div>
+                            <div class="demo-result">
+                                <div class="result-label">Taxa</div>
+                                <div class="result-value highlight">1.2% (80% menor que bancos tradicionais)</div>
+                            </div>
+                            <div class="demo-result">
+                                <div class="result-label">Tempo estimado</div>
+                                <div class="result-value highlight">60 segundos</div>
+                            </div>
+                            <div class="demo-button">Confirmar Transferência</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -119,152 +213,108 @@ const twop = new TwoP('&lt;api_key&gt;');
             <div class="benefits-grid">
                 <div class="benefit-card">
                     <div class="benefit-icon">
-                        <i class="fas fa-code"></i>
+                        <i class="fas fa-clock"></i>
                     </div>
-                    <h3>Integração Digital Simplificada</h3>
-                    <p>Integre facilmente soluções digitais ao seu fluxo de pagamento existente com nossas APIs amigáveis para desenvolvedores.</p>
+                    <h3>Disponível 24/7</h3>
+                    <p>Realize transferências a qualquer hora, em qualquer dia da semana, incluindo feriados. Sua empresa não precisa mais esperar pelo horário comercial dos bancos.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <h3>Taxas Significativamente Menores</h3>
+                    <p>Economize até 80% em taxas comparado aos métodos tradicionais de transferência internacional. Mais dinheiro no bolso do seu cliente.</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">
                         <i class="fas fa-bolt"></i>
                     </div>
-                    <h3>Transações Instantâneas</h3>
-                    <p>Conecte qualquer carteira, obtenha cotações em tempo real e desfrute de taxas baixas para uma experiência de usuário perfeita.</p>
+                    <h3>Transferências Ultra-rápidas</h3>
+                    <p>Esqueça os 3-5 dias úteis dos bancos tradicionais. Com a 2P, suas transferências internacionais são concluídas em apenas 60 segundos.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-mouse-pointer"></i>
+                    </div>
+                    <h3>Fácil de Usar</h3>
+                    <p>Interface intuitiva projetada para simplificar pagamentos internacionais. Não é necessário conhecimento técnico ou financeiro especializado.</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>Conformidade Garantida</h3>
-                    <p>Nós cuidamos de todas as questões regulatórias, de conformidade e técnicas. Concentre-se no seu negócio principal.</p>
+                    <h3>Segurança Avançada</h3>
+                    <p>Proteção de ponta a ponta para todas as suas transações com criptografia avançada e monitoramento contínuo contra fraudes.</p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Powering Companies Section -->
-    <section class="powering">
-        <div class="container">
-            <h2 class="section-title">Impulsionando Empresas Inovadoras</h2>
-            <p class="section-subtitle">Habilitando pagamentos internacionais seguros em menos de 60 segundos, reduzindo os tempos de transação tradicionais em 80%.</p>
-            <div class="time-saving-graphic">
-                <div class="traditional">
-                    <span class="label">Método Tradicional</span>
-                    <div class="bar"></div>
-                    <span class="time">5 minutos</span>
-                </div>
-                <div class="with-2p">
-                    <span class="label">Com 2P</span>
-                    <div class="bar"></div>
-                    <span class="time">60 segundos</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Solutions Section -->
-    <section id="solucoes" class="solutions">
-        <div class="container">
-            <h2 class="section-title">Soluções</h2>
-            <div class="solutions-grid">
-                <div class="solution-card">
-                    <div class="solution-icon">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
                         <i class="fas fa-globe"></i>
                     </div>
-                    <h3>Folha de Pagamento Global</h3>
-                    <p>Pague seus contratados em qualquer moeda, não importa onde estejam.</p>
+                    <h3>Cobertura Global</h3>
+                    <p>Envie e receba pagamentos de mais de 150 países em diversas moedas, tudo em uma única plataforma simples e integrada.</p>
                 </div>
-                <div class="solution-card">
-                    <div class="solution-icon">
-                        <i class="fas fa-building"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Uma plataforma completa para suas necessidades</h2>
+            <p class="section-subtitle">Descubra como a 2P simplifica pagamentos internacionais para empresas de todos os tamanhos.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-money-bill-wave"></i>
                     </div>
-                    <h3>Pagamentos Empresariais</h3>
-                    <p>Gerencie pagamentos globais em massa com facilidade.</p>
+                    <h3>Múltiplas Moedas</h3>
+                    <p>Suporte a mais de 50 moedas diferentes, com taxas de câmbio competitivas e atualizadas em tempo real.</p>
                 </div>
-                <div class="solution-card">
-                    <div class="solution-icon">
-                        <i class="fas fa-store"></i>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3>Liquidação para Comerciantes</h3>
-                    <p>Agilize pagamentos com consolidação automática de moedas.</p>
+                    <h3>Relatórios Detalhados</h3>
+                    <p>Acompanhe todas as suas transações com relatórios completos e exportáveis para sua contabilidade.</p>
                 </div>
-                <div class="solution-card">
-                    <div class="solution-icon">
-                        <i class="fas fa-file-invoice-dollar"></i>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
                     </div>
-                    <h3>Faturamento Empresarial</h3>
-                    <p>Simplifique seu processo de faturamento com transações digitais.</p>
+                    <h3>Gerenciamento de Equipe</h3>
+                    <p>Adicione membros da sua equipe com diferentes níveis de permissão para maior controle e segurança.</p>
                 </div>
-                <div class="solution-card">
-                    <div class="solution-icon">
-                        <i class="fas fa-exchange-alt"></i>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
                     </div>
-                    <h3>Remessas</h3>
-                    <p>Ofereça soluções de remessa rápidas e acessíveis para seus clientes.</p>
+                    <h3>Aplicativo Móvel</h3>
+                    <p>Acesse sua conta e realize transações de qualquer lugar através do nosso aplicativo para iOS e Android.</p>
                 </div>
-                <div class="solution-card">
-                    <div class="solution-icon">
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Suporte Dedicado</h3>
+                    <p>Equipe de suporte especializada disponível 24/7 para ajudar com qualquer questão ou emergência.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
                         <i class="fas fa-lock"></i>
                     </div>
-                    <h3>Segurança Integrada</h3>
-                    <p>Proteção completa para todas as suas transações financeiras.</p>
+                    <h3>Segurança Certificada</h3>
+                    <p>Certificações de segurança de nível bancário e conformidade com regulamentações internacionais.</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Technical Section -->
-    <section class="technical">
-        <div class="container">
-            <h2 class="section-title">Segurança por design, em todas as plataformas</h2>
-            <p class="section-subtitle">Adicione gateways de pagamento aos seus aplicativos com código mínimo. Nossas SDKs suportam múltiplas linguagens e frameworks, apoiadas por uma API REST amigável para desenvolvedores com documentação OpenAPI pública.</p>
-            <div class="tech-tabs">
-                <div class="tab-header">
-                    <button class="tab-btn active" data-tab="kyc">KYC/KYB</button>
-                    <button class="tab-btn" data-tab="bank">Contas Bancárias</button>
-                    <button class="tab-btn" data-tab="payments">Pagamentos</button>
-                    <button class="tab-btn" data-tab="wallets">Carteiras</button>
-                </div>
-                <div class="tab-content">
-                    <div class="tab-pane active" id="kyc">
-                        <pre><code>
-import { TwoP } from '2p';
-const twop = new TwoP('&lt;api_key&gt;');
-
-(async function() {
-    // KYC Padrão
-    await twop.customers.create('&lt;instance_id&gt;', {
-        type: "individual",
-        kyc_type: "standard",
-        email: "email@exemplo.com",
-        tax_id: "12345678901",
-        first_name: "João",
-        last_name: "Silva",
-        date_of_birth: "1990-01-01T00:00:00Z"
-    });
-})</code></pre>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <h2 class="section-title">Uma API. Múltiplas opções de pagamento.</h2>
-            <div class="cta-buttons">
-                <a href="#" class="btn btn-primary">Solicitar Demo</a>
-                <a href="#" class="btn btn-outline">Ver Documentação</a>
-            </div>
-            <div class="global-map">
-                <img src="global-map.svg" alt="Mapa global mostrando alcance internacional">
-            </div>
-            <div class="crypto-icons">
-                <div class="crypto-icon"><i class="fab fa-bitcoin"></i></div>
-                <div class="crypto-icon"><i class="fab fa-ethereum"></i></div>
-                <div class="crypto-icon"><i class="fas fa-dollar-sign"></i></div>
-                <div class="crypto-icon"><i class="fas fa-euro-sign"></i></div>
+            
+            <div class="features-cta">
+                <a href="#plataforma" class="btn btn-primary">Experimentar a Plataforma</a>
             </div>
         </div>
     </section>
@@ -297,23 +347,45 @@ const twop = new TwoP('&lt;api_key&gt;');
         </div>
     </section>
 
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2 class="section-title">Simplifique seus pagamentos internacionais hoje</h2>
+            <p class="cta-subtitle text-center">Junte-se a milhares de empresas que economizam tempo e dinheiro com a 2P</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary">Começar Gratuitamente</a>
+                <a href="#" class="btn btn-outline">Agendar Demonstração</a>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-top">
+            <div class="footer-content">
                 <div class="footer-logo">
                     <h2>2P</h2>
+                    <p class="tagline">Pagamentos internacionais simplificados</p>
                 </div>
-                <div class="footer-social">
-                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                
+                <div class="footer-contact">
+                    <h3>Contato</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:contato@2p.com.br">contato@2p.com.br</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <a href="tel:+5511987654321">+55 (11) 98765-4321</a>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
                 </div>
-            </div>
-            <div class="footer-links">
-                <div class="footer-column">
-                    <h3>Empresa</h3>
+                
+                <div class="footer-links">
+                    <h3>Links Rápidos</h3>
                     <ul>
                         <li><a href="#">Sobre nós</a></li>
                         <li><a href="#">Suporte</a></li>
@@ -321,39 +393,10 @@ const twop = new TwoP('&lt;api_key&gt;');
                         <li><a href="#">Termos de Serviço</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
-                    <h3>Desenvolvedores</h3>
-                    <ul>
-                        <li><a href="#" id="documentacao">Documentação da API</a></li>
-                        <li><a href="#">Referência da API</a></li>
-                        <li><a href="#">SDKs e Bibliotecas</a></li>
-                        <li><a href="#">Exemplos de Integração</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Recursos</h3>
-                    <ul>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Webinars</a></li>
-                        <li><a href="#">Estudos de Caso</a></li>
-                        <li><a href="#">FAQ</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Status</h3>
-                    <div class="system-status">
-                        <span class="status-indicator online"></span>
-                        <span>Todos os sistemas operacionais</span>
-                    </div>
-                    <div class="footer-contact">
-                        <p>Precisa de ajuda?</p>
-                        <a href="mailto:contato@2p.com.br" class="contact-link">contato@2p.com.br</a>
-                    </div>
-                </div>
             </div>
+            
             <div class="footer-bottom">
-                <p>2P, Inc. é uma empresa de tecnologia financeira especializada em pagamentos internacionais com blockchain. Ao criar e usar sua conta na 2P, você concorda com os Termos de Serviço da 2P, com todas as leis e regulamentos aplicáveis.</p>
-                <p>&copy; 2025 2P, Inc. Todos os direitos reservados.</p>
+                <p>&copy; 2025 2P. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
