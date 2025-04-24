@@ -578,6 +578,562 @@ section {
     padding-bottom: var(--spacing-xl);
 }
 
+/* Comparação de Transações Section */
+.comparison-section {
+    background-color: var(--bg-light);
+    padding: var(--spacing-xl) 0;
+    overflow: hidden;
+}
+
+.comparison-tabs {
+    margin-top: var(--spacing-md);
+}
+
+.tab-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-medium);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+    color: var(--blue-primary);
+}
+
+.tab-btn.active {
+    color: var(--blue-primary);
+    font-weight: 600;
+}
+
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--blue-primary);
+    border-radius: 3px 3px 0 0;
+}
+
+.tab-content {
+    position: relative;
+    min-height: 400px;
+}
+
+.tab-pane {
+    display: none;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Comparação de Velocidade */
+.comparison-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.comparison-item {
+    background-color: var(--bg-white);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.comparison-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.comparison-header {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+}
+
+.comparison-header.traditional {
+    background-color: #6B7A9E;
+}
+
+.comparison-header.blockchain {
+    background-color: var(--blue-primary);
+}
+
+.comparison-icon {
+    font-size: 1.8rem;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+}
+
+.comparison-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.comparison-body {
+    padding: 1.5rem;
+}
+
+.comparison-metric {
+    margin-bottom: 1.5rem;
+}
+
+.metric-label {
+    font-size: 0.9rem;
+    color: var(--text-medium);
+    margin-bottom: 0.5rem;
+}
+
+.metric-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.metric-value.highlight {
+    color: var(--success);
+}
+
+/* Timeline */
+.comparison-timeline {
+    position: relative;
+    margin-top: 2rem;
+}
+
+.timeline-bar {
+    position: relative;
+    height: 4px;
+    width: 100%;
+    background-color: #E0E0E0;
+    border-radius: 2px;
+    margin: 2rem 0;
+}
+
+.timeline-bar.traditional {
+    background-color: #E0E0E0;
+}
+
+.timeline-bar.blockchain {
+    background-color: rgba(0, 182, 122, 0.3);
+}
+
+.timeline-step {
+    position: absolute;
+    transform: translateX(-50%);
+}
+
+.step-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--blue-primary);
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.step-label {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    color: var(--text-medium);
+    width: max-content;
+    text-align: center;
+}
+
+/* Speed Chart */
+.speed-chart-container {
+    background-color: var(--bg-white);
+    padding: 2rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    margin-top: 2rem;
+}
+
+.speed-chart-container h4 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+}
+
+.speed-chart {
+    margin-bottom: 1.5rem;
+}
+
+.chart-bar-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.chart-label {
+    width: 150px;
+    font-size: 0.9rem;
+    color: var(--text-medium);
+}
+
+.chart-bar {
+    height: 30px;
+    border-radius: 15px;
+    position: relative;
+    transition: width 1.5s ease-in-out;
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+}
+
+.chart-bar.traditional {
+    background-color: #6B7A9E;
+}
+
+.chart-bar.blockchain {
+    background-color: var(--success);
+}
+
+.chart-value {
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.chart-note {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-medium);
+    font-style: italic;
+}
+
+/* Fee Breakdown */
+.fee-breakdown {
+    margin-top: 1.5rem;
+}
+
+.fee-breakdown h4 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.fee-breakdown ul {
+    list-style: none;
+    padding: 0;
+}
+
+.fee-breakdown li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 0.9rem;
+}
+
+.fee-type {
+    color: var(--text-medium);
+}
+
+/* Cost Chart */
+.cost-chart-container {
+    background-color: var(--bg-white);
+    padding: 2rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    margin-top: 2rem;
+}
+
+.cost-chart-container h4 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+}
+
+.chart-columns {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: 250px;
+}
+
+.chart-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+}
+
+.column-title {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.column-bars {
+    display: flex;
+    align-items: flex-end;
+    height: 200px;
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.column-bar {
+    width: 40px;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    transition: height 1.5s ease-in-out;
+}
+
+.column-bar.traditional {
+    background-color: #6B7A9E;
+}
+
+.column-bar.blockchain {
+    background-color: var(--success);
+}
+
+.bar-value {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.column-labels {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.5rem;
+    gap: 1rem;
+}
+
+.label-item {
+    font-size: 0.8rem;
+    color: var(--text-medium);
+    width: 40px;
+    text-align: center;
+}
+
+/* Security Comparison */
+.security-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.security-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.security-feature {
+    background-color: var(--bg-white);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.feature-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.feature-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.feature-traditional, .feature-blockchain {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.feature-traditional i.fa-times-circle {
+    color: var(--error);
+    font-size: 1.2rem;
+}
+
+.feature-traditional i.fa-check-circle {
+    color: #FFA500;
+    font-size: 1.2rem;
+}
+
+.feature-traditional i.fa-check-circle.partial {
+    color: #FFA500;
+}
+
+.feature-blockchain i.fa-check-circle {
+    color: var(--success);
+    font-size: 1.2rem;
+}
+
+.feature-traditional span, .feature-blockchain span {
+    font-size: 0.9rem;
+    color: var(--text-medium);
+}
+
+/* Security Diagram */
+.security-visual {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.security-diagram {
+    background-color: var(--bg-white);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.diagram-title {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: var(--text-dark);
+}
+
+.diagram-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.diagram-traditional, .diagram-blockchain {
+    text-align: center;
+}
+
+.diagram-traditional h4, .diagram-blockchain h4 {
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+.diagram-image {
+    height: 200px;
+    position: relative;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.traditional-diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.blockchain-diagram {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+}
+
+.diagram-node {
+    padding: 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    color: white;
+    z-index: 2;
+}
+
+.diagram-node.central {
+    background-color: #6B7A9E;
+    margin-bottom: 2rem;
+}
+
+.diagram-node.branch {
+    background-color: #9BAAC8;
+    margin: 0 0.5rem;
+}
+
+.diagram-node.blockchain-node {
+    background-color: var(--blue-primary);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.diagram-connection {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.blockchain-connection {
+    background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='smallGrid' width='10' height='10' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 10 0 L 0 0 0 10' fill='none' stroke='%231E5EFA20' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23smallGrid)'/%3E%3C/svg%3E");
+}
+
+.diagram-caption {
+    font-size: 0.9rem;
+    color: var(--text-medium);
+}
+
+.comparison-cta {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
 .benefits-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -887,6 +1443,7 @@ section {
     border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
+/* Bandeira da União Europeia (EUR) - Melhorada */
 .eur-flag {
     background-color: #003399;
     position: relative;
@@ -900,13 +1457,28 @@ section {
     transform: translate(-50%, -50%);
     width: 70%;
     height: 70%;
-    background: radial-gradient(circle, transparent 0%, transparent 40%, #FFCC00 40%, #FFCC00 45%, transparent 45%);
-    background-size: 30% 30%;
-    background-repeat: repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+.eur-flag::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 70%;
+    background: radial-gradient(circle, transparent 40%, #003399 40%), 
+                repeating-conic-gradient(from 0deg, #FFCC00 0deg 30deg, transparent 30deg 60deg);
+    border-radius: 50%;
+}
+
+/* Bandeira dos Estados Unidos (USD) */
 .usd-flag {
-    background-image: linear-gradient(to bottom, #B22234 0%, #B22234 7.7%, white 7.7%, white 15.4%, #B22234 15.4%, #B22234 23.1%, white 23.1%, white 30.8%, #B22234 30.8%, #B22234 38.5%, white 38.5%, white 46.2%, #B22234 46.2%, #B22234 53.9%, white 53.9%, white 61.6%, #B22234 61.6%, #B22234 69.3%, white 69.3%, white 77%, #B22234 77%, #B22234 84.7%, white 84.7%, white 92.4%, #B22234 92.4%);
+    background: repeating-linear-gradient(180deg, #B31942, #B31942 7.7%, white 7.7%, white 15.4%);
+    position: relative;
 }
 
 .usd-flag::before {
@@ -919,10 +1491,66 @@ section {
     background-color: #3C3B6E;
 }
 
+/* Bandeira do Brasil (BRL) - Melhorada */
 .brl-flag {
     background-color: #009c3b;
     position: relative;
     overflow: hidden;
+}
+
+.brl-flag::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(10deg);
+    width: 80%;
+    height: 50%;
+    background-color: #ffdf00;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.brl-flag::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 35%;
+    height: 35%;
+    background-color: #002776;
+    border-radius: 50%;
+}
+
+/* Bandeira do Reino Unido (GBP) - Nova */
+.gbp-flag {
+    background-color: #012169;
+    position: relative;
+    overflow: hidden;
+}
+
+.gbp-flag::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(to bottom right, transparent calc(50% - 2px), white calc(50% - 2px), white calc(50% + 2px), transparent calc(50% + 2px)),
+        linear-gradient(to bottom left, transparent calc(50% - 2px), white calc(50% - 2px), white calc(50% + 2px), transparent calc(50% + 2px));
+}
+
+.gbp-flag::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(to bottom, transparent calc(50% - 5px), #C8102E calc(50% - 5px), #C8102E calc(50% + 5px), transparent calc(50% + 5px)),
+        linear-gradient(to right, transparent calc(50% - 5px), #C8102E calc(50% - 5px), #C8102E calc(50% + 5px), transparent calc(50% + 5px));
 }
 
 .brl-flag::before {

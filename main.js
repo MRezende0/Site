@@ -16,21 +16,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Smooth scroll para links de navegação
     setupSmoothScroll();
     
-    // Animação de blockchain
-    setupBlockchainAnimation();
-    
     // Contador para números na seção de estatísticas
     setupCounters();
-    
-    // Efeito de digitação para código
-    setupTypingEffect();
     
     // Efeito de partículas para o fundo
     setupParticleEffect();
     
-    // Inicializa a demonstração do dashboard
+    // Inicializa a demonstração do dashboard - PRIORIDADE
     if (document.querySelector('.dashboard-content')) {
         setupDashboardDemo();
+        console.log('Dashboard demo inicializado');
     }
     
     // Adiciona classe 'loaded' ao body quando a página terminar de carregar
@@ -105,19 +100,35 @@ function setupMobileMenu() {
 }
 
 /**
- * Configura as tabs na seção técnica com transições suaves
+ * Configura as tabs na seção técnica e na seção de comparação com transições suaves
  */
 function setupTabs() {
-    const tabButtons = document.querySelectorAll('.tab-btn');
+    // Configura as tabs na seção técnica
+    setupTabsInSection('.tab-btn', '.tab-pane');
+    
+    // Configura as tabs na seção de comparação
+    setupTabsInSection('.comparison-tabs .tab-btn', '#speed, #cost, #security');
+    
+    // Configura o conteúdo das tabs adicionais
+    setupTabContent();
+    
+    // Animação dos gráficos na seção de comparação
+    setupComparisonCharts();
+}
+
+/**
+ * Configura as tabs em uma seção específica
+ */
+function setupTabsInSection(buttonSelector, paneSelector) {
+    const tabButtons = document.querySelectorAll(buttonSelector);
     
     if (tabButtons.length > 0) {
-        // Configura o conteúdo das tabs adicionais
-        setupTabContent();
-        
         tabButtons.forEach(button => {
             button.addEventListener('click', function() {
-                // Remove a classe active de todos os botões
-                tabButtons.forEach(btn => btn.classList.remove('active'));
+                // Remove a classe active de todos os botões no mesmo grupo
+                const parentContainer = this.closest('.tab-buttons') || this.parentNode;
+                const siblingButtons = parentContainer.querySelectorAll(buttonSelector);
+                siblingButtons.forEach(btn => btn.classList.remove('active'));
                 
                 // Adiciona a classe active ao botão clicado
                 this.classList.add('active');
@@ -126,7 +137,7 @@ function setupTabs() {
                 const tabId = this.getAttribute('data-tab');
                 
                 // Esconde todas as tabs com fade out
-                const tabPanes = document.querySelectorAll('.tab-pane');
+                const tabPanes = document.querySelectorAll(paneSelector);
                 tabPanes.forEach(pane => {
                     pane.classList.remove('active');
                     pane.style.opacity = '0';
@@ -141,8 +152,61 @@ function setupTabs() {
                         selectedTab.style.opacity = '1';
                         selectedTab.style.transform = 'translateY(0)';
                     }, 50);
+                    
+                    // Anima os gráficos quando a tab é exibida
+                    if (tabId === 'speed' || tabId === 'cost' || tabId === 'security') {
+                        animateChartsInTab(tabId);
+                    }
                 }
             });
+        });
+    }
+}
+
+/**
+ * Configura e anima os gráficos na seção de comparação
+ */
+function setupComparisonCharts() {
+    // Configura a observação da seção de comparação para animar quando visível
+    const comparisonSection = document.querySelector('.comparison-section');
+    if (comparisonSection) {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                // Anima os gráficos da tab ativa
+                const activeTab = comparisonSection.querySelector('.tab-pane.active');
+                if (activeTab) {
+                    animateChartsInTab(activeTab.id);
+                }
+                observer.disconnect();
+            }
+        }, { threshold: 0.2 });
+        
+        observer.observe(comparisonSection);
+    }
+}
+
+/**
+ * Anima os gráficos em uma tab específica
+ */
+function animateChartsInTab(tabId) {
+    if (tabId === 'speed') {
+        // Anima o gráfico de barras de velocidade
+        const blockchainBar = document.querySelector('#speed .chart-bar.blockchain');
+        if (blockchainBar) {
+            blockchainBar.style.width = '1%';
+            setTimeout(() => {
+                blockchainBar.style.width = '5%';
+            }, 100);
+        }
+    } else if (tabId === 'cost') {
+        // Anima as barras de custo
+        const columnBars = document.querySelectorAll('#cost .column-bar');
+        columnBars.forEach(bar => {
+            const originalHeight = bar.style.height;
+            bar.style.height = '0';
+            setTimeout(() => {
+                bar.style.height = originalHeight;
+            }, 100);
         });
     }
 }
@@ -660,4 +724,146 @@ function setupParticleEffect() {
     
     init();
     animate();
+}
+
+/**
+ * Simula dados dinâmicos para o dashboard na hero section
+ */
+function setupDashboardDemo() {
+    console.log('Iniciando setupDashboardDemo');
+    
+    // Dados de transações para simulação
+    const transactions = [
+        { 
+            time: '10:15', 
+            amount: 'R$ 50.000,00', 
+            status: 'success',
+            currency: 'brl-flag'
+        },
+        { 
+            time: '09:42', 
+            amount: '€ 19.200,00', 
+            status: 'processing',
+            currency: 'eur-flag'
+        },
+        { 
+            time: '09:15', 
+            amount: '$ 37.500,00', 
+            status: 'success',
+            currency: 'usd-flag'
+        },
+        { 
+            time: '08:50', 
+            amount: '£ 23.000,00', 
+            status: 'success',
+            currency: 'gbp-flag'
+        },
+        { 
+            time: '08:22', 
+            amount: 'R$ 18.000,00', 
+            status: 'processing',
+            currency: 'brl-flag'
+        },
+        { 
+            time: '07:45', 
+            amount: '$ 42.000,00', 
+            status: 'success',
+            currency: 'usd-flag'
+        },
+        { 
+            time: '07:30', 
+            amount: 'R$ 15.750,00', 
+            status: 'success',
+            currency: 'brl-flag'
+        },
+        { 
+            time: '07:12', 
+            amount: '$ 8.900,00', 
+            status: 'processing',
+            currency: 'usd-flag'
+        },
+        { 
+            time: '06:55', 
+            amount: '€ 12.300,00', 
+            status: 'success',
+            currency: 'eur-flag'
+        }
+    ];
+    
+    // Encontra o elemento dashboard-content
+    const dashboardContent = document.querySelector('.dashboard-content');
+    
+    if (!dashboardContent) {
+        console.error('Elemento .dashboard-content não encontrado!');
+        return;
+    }
+    
+    console.log('Elemento dashboard-content encontrado');
+    
+    // Limpar o conteúdo atual para garantir que começamos com exatamente 3 transações
+    dashboardContent.innerHTML = '';
+    
+    // Adicionar as 3 primeiras transações iniciais
+    for (let i = 0; i < 3; i++) {
+        const transaction = transactions[i];
+        const transactionElement = document.createElement('div');
+        transactionElement.className = 'transaction';
+        transactionElement.innerHTML = `
+            <div class="time">${transaction.time}</div>
+            <div class="amount">
+                <div class="currency-flag ${transaction.currency}"></div>
+                <span>${transaction.amount}</span>
+            </div>
+            <div class="status ${transaction.status}">${
+                transaction.status === 'success' ? 'Sucesso' : 'Processando'
+            }</div>
+        `;
+        dashboardContent.appendChild(transactionElement);
+    }
+    
+    // Iniciar a partir da quarta transação
+    let currentIndex = 3;
+    
+    // Função para adicionar uma nova transação
+    function addTransaction() {
+        console.log('Adicionando nova transação, índice:', currentIndex);
+        
+        // Remove a última transação se já tivermos 5 transações
+        if (dashboardContent.children.length >= 5) {
+            dashboardContent.removeChild(dashboardContent.lastChild);
+        }
+        
+        // Cria o elemento da nova transação
+        const newTransaction = document.createElement('div');
+        newTransaction.className = 'transaction';
+        
+        // Define o conteúdo HTML da transação
+        newTransaction.innerHTML = `
+            <div class="time">${transactions[currentIndex].time}</div>
+            <div class="amount">
+                <div class="currency-flag ${transactions[currentIndex].currency}"></div>
+                <span>${transactions[currentIndex].amount}</span>
+            </div>
+            <div class="status ${transactions[currentIndex].status}">${
+                transactions[currentIndex].status === 'success' ? 'Sucesso' : 'Processando'
+            }</div>
+        `;
+        
+        // Adiciona a nova transação com efeito de fade in
+        newTransaction.style.opacity = '0';
+        dashboardContent.prepend(newTransaction);
+        
+        // Aplica a transição após um pequeno atraso para garantir que o DOM foi atualizado
+        setTimeout(() => {
+            newTransaction.style.transition = 'opacity 0.5s ease';
+            newTransaction.style.opacity = '1';
+        }, 10);
+        
+        // Atualiza o índice para a próxima transação
+        currentIndex = (currentIndex + 1) % transactions.length;
+    }
+    
+    // Configura o intervalo para adicionar novas transações a cada 3 segundos (uma por uma)
+    const intervalId = setInterval(addTransaction, 3000);
+    console.log('Intervalo configurado para adicionar uma transação a cada 3 segundos');
 }
