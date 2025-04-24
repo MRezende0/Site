@@ -100,35 +100,19 @@ function setupMobileMenu() {
 }
 
 /**
- * Configura as tabs na seção técnica e na seção de comparação com transições suaves
+ * Configura as tabs na seção técnica com transições suaves
  */
 function setupTabs() {
-    // Configura as tabs na seção técnica
-    setupTabsInSection('.tab-btn', '.tab-pane');
-    
-    // Configura as tabs na seção de comparação
-    setupTabsInSection('.comparison-tabs .tab-btn', '#speed, #cost, #security');
-    
-    // Configura o conteúdo das tabs adicionais
-    setupTabContent();
-    
-    // Animação dos gráficos na seção de comparação
-    setupComparisonCharts();
-}
-
-/**
- * Configura as tabs em uma seção específica
- */
-function setupTabsInSection(buttonSelector, paneSelector) {
-    const tabButtons = document.querySelectorAll(buttonSelector);
+    const tabButtons = document.querySelectorAll('.tab-btn');
     
     if (tabButtons.length > 0) {
+        // Configura o conteúdo das tabs adicionais
+        setupTabContent();
+        
         tabButtons.forEach(button => {
             button.addEventListener('click', function() {
-                // Remove a classe active de todos os botões no mesmo grupo
-                const parentContainer = this.closest('.tab-buttons') || this.parentNode;
-                const siblingButtons = parentContainer.querySelectorAll(buttonSelector);
-                siblingButtons.forEach(btn => btn.classList.remove('active'));
+                // Remove a classe active de todos os botões
+                tabButtons.forEach(btn => btn.classList.remove('active'));
                 
                 // Adiciona a classe active ao botão clicado
                 this.classList.add('active');
@@ -137,7 +121,7 @@ function setupTabsInSection(buttonSelector, paneSelector) {
                 const tabId = this.getAttribute('data-tab');
                 
                 // Esconde todas as tabs com fade out
-                const tabPanes = document.querySelectorAll(paneSelector);
+                const tabPanes = document.querySelectorAll('.tab-pane');
                 tabPanes.forEach(pane => {
                     pane.classList.remove('active');
                     pane.style.opacity = '0';
@@ -152,61 +136,8 @@ function setupTabsInSection(buttonSelector, paneSelector) {
                         selectedTab.style.opacity = '1';
                         selectedTab.style.transform = 'translateY(0)';
                     }, 50);
-                    
-                    // Anima os gráficos quando a tab é exibida
-                    if (tabId === 'speed' || tabId === 'cost' || tabId === 'security') {
-                        animateChartsInTab(tabId);
-                    }
                 }
             });
-        });
-    }
-}
-
-/**
- * Configura e anima os gráficos na seção de comparação
- */
-function setupComparisonCharts() {
-    // Configura a observação da seção de comparação para animar quando visível
-    const comparisonSection = document.querySelector('.comparison-section');
-    if (comparisonSection) {
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                // Anima os gráficos da tab ativa
-                const activeTab = comparisonSection.querySelector('.tab-pane.active');
-                if (activeTab) {
-                    animateChartsInTab(activeTab.id);
-                }
-                observer.disconnect();
-            }
-        }, { threshold: 0.2 });
-        
-        observer.observe(comparisonSection);
-    }
-}
-
-/**
- * Anima os gráficos em uma tab específica
- */
-function animateChartsInTab(tabId) {
-    if (tabId === 'speed') {
-        // Anima o gráfico de barras de velocidade
-        const blockchainBar = document.querySelector('#speed .chart-bar.blockchain');
-        if (blockchainBar) {
-            blockchainBar.style.width = '1%';
-            setTimeout(() => {
-                blockchainBar.style.width = '5%';
-            }, 100);
-        }
-    } else if (tabId === 'cost') {
-        // Anima as barras de custo
-        const columnBars = document.querySelectorAll('#cost .column-bar');
-        columnBars.forEach(bar => {
-            const originalHeight = bar.style.height;
-            bar.style.height = '0';
-            setTimeout(() => {
-                bar.style.height = originalHeight;
-            }, 100);
         });
     }
 }
